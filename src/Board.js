@@ -5,30 +5,32 @@ import './index.css'
 class Board extends React.Component {
     renderSquare(i) {
         return <Square
+            key={i}
             value={this.props.squares[i]}
             onClick={() => this.props.onClick(i)} />
     }
 
+    createBoard() {
+        let squareCount = 0
+        let boardRows = Array(3).fill(null)
+        for (let i = 0; i < 3; i++) {
+            let squares = Array(3).fill(null)
+            for (let j = 0; j < 3; j++) {
+                squares[j] = this.renderSquare(squareCount)
+                squareCount++
+            }
+            boardRows[i] = <div className="board-row">{squares}</div>
+        }
+        return boardRows
+    }
+
     render() {
-        return (
-            <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
-            </div>
-        )
+        const boardRows = this.createBoard()
+        const rows = boardRows.map((row, index) => {
+            return (<div key={index}> {row}</div >)
+        })
+
+        return <div>{rows}</div>
     }
 }
 

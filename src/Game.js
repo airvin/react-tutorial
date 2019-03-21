@@ -12,53 +12,50 @@ class Game extends React.Component {
                 placeOrder: Array(9).fill(null)
             }],
             xIsNext: true,
-            stepNumber: 0
+            stepNumber: 0,
+            boldMove: null
+        }
+    }
+
+    getPosition(i) {
+        switch (i) {
+            case 0:
+                return '(1,1)'
+            case 1:
+                return '(1,2)'
+            case 2:
+                return '(1,3)'
+            case 3:
+                return '(2,1)'
+            case 4:
+                return '(2,2)'
+            case 5:
+                return '(2,3)'
+            case 6:
+                return '(3,1)'
+            case 7:
+                return '(3,2)'
+            case 8:
+                return '(3,3)'
+            default:
+                break
         }
     }
 
     handleClick(i) {
+        this.setState({
+            boldMove: i
+        })
+
         const history = this.state.history
         const current = history[history.length - 1]
         const squares = current.squares.slice()
         const placeOrder = current.placeOrder.slice()
-        console.log(history)
         if (calculateWinner(squares) || squares[i]) {
             return
         }
         squares[i] = this.state.xIsNext ? 'X' : 'O'
-        let position = ''
-        switch (i) {
-            case 0:
-                position = '(1,1)'
-                break
-            case 1:
-                position = '(1,2)'
-                break
-            case 2:
-                position = '(1,3)'
-                break
-            case 3:
-                position = '(2,1)'
-                break
-            case 4:
-                position = '(2,2)'
-                break
-            case 5:
-                position = '(2,3)'
-                break
-            case 6:
-                position = '(3,1)'
-                break
-            case 7:
-                position = '(3,2)'
-                break
-            case 8:
-                position = '(3,3)'
-                break
-            default:
-                break
-        }
-        placeOrder[history.length] = position
+        placeOrder[history.length] = i
         this.setState({
             history: this.state.history.concat({ squares: squares, placeOrder: placeOrder }),
             xIsNext: !this.state.xIsNext
@@ -83,11 +80,15 @@ class Game extends React.Component {
             let desc = 'Go to start'
             if (move) {
                 let player = (move % 2) === 0 ? 'O' : 'X'
-                desc = `Player ${player} placed token at ${positions[move]}`
+                desc = `Player ${player} placed token at ${this.getPosition(positions[move])}`
             }
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)} style={{ fontWeight: move === history.length - 1 ? 'bold' : 'normal' }}>{desc}</button>
+                    <button
+                        onClick={() => this.jumpTo(move)}
+                        style={{ fontWeight: positions[move] === this.state.boldMove ? 'bold' : 'normal' }}>
+                        {desc}
+                    </button>
                 </li>
             )
         })
