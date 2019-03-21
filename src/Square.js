@@ -4,7 +4,7 @@ import './index.css'
 function Square(props) {
     return (
         <button
-            className="square"
+            className={props.winningSquare ? "winning-square" : "square"}
             onClick={() => props.onClick()}>
             {props.value}
         </button>

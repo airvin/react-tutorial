@@ -49,8 +49,27 @@ body {
     text-align: center;
     width: 150px;
   }
+
+  .winning-square {
+    background: rgb(50, 199, 87);
+    border: 6px solid rgb(104, 110, 104);
+    float: left;
+    font-size: 100px;
+    font-weight: normal;
+    line-height: 34px;
+    height: 150px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 150px;
+  }
   
   .square:focus {
+    outline: none;
+  }
+
+  .winning-square:focus {
     outline: none;
   }
   
