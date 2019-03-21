@@ -94,7 +94,7 @@ class Game extends React.Component {
                 desc = `Player ${player} placed token at ${this.getPosition(positions[move])}`
             }
             return (
-                <li key={move}>
+                <li key={move} className='move-info'>
                     <div className='move-info'>
                         <p>{move}</p>
                         <button
@@ -112,7 +112,7 @@ class Game extends React.Component {
         }
         let status
         if (winner) {
-            status = 'Winner is ' + winner
+            status = `Winner is ${winner}!`
         } else if (!winner && history.length === 10) {
             status = "Game is a draw"
         } else {
@@ -129,8 +129,8 @@ class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
-                    <div>{status}</div>
-                    <button onClick={() => this.reverseSortOrder()}>
+                    <div className="game-status">{status}</div>
+                    <button className="sort-button" onClick={() => this.reverseSortOrder()}>
                         Sort {this.state.sortOrder === 'ascending' ? 'descending' : 'ascending'}
                     </button>
                     <ul>{moves}</ul>
