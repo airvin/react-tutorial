@@ -36,18 +36,18 @@ body {
   }
   
   .square {
-    background: #fff;
-    border: 1px solid #999;
+    background: rgb(167, 167, 167);
+    border: 6px solid rgb(110, 104, 104);
     float: left;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 100px;
+    font-weight: normal;
     line-height: 34px;
-    height: 34px;
+    height: 150px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 150px;
   }
   
   .square:focus {
@@ -61,6 +61,10 @@ body {
   .game {
     display: flex;
     flex-direction: row;
+  }
+
+  .game-board {
+      border: 3px solid rgb(110, 104, 104);
   }
   
   .game-info {
