@@ -7,6 +7,24 @@ body {
     padding-left: 30px;
   }
   
+  li {
+      list-style: none;
+  }
+
+  p {
+    margin: auto;
+  }
+
+  button.move-to-button {
+      margin: 4px;
+      border-radius: 6px; 
+  }
+
+  .move-info {
+      height: 35px;
+      display: inline-flex;
+  }
+
   .board-row:after {
     clear: both;
     content: "";

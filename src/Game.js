@@ -13,7 +13,8 @@ class Game extends React.Component {
             }],
             xIsNext: true,
             stepNumber: 0,
-            boldMove: null
+            boldMove: null,
+            sortOrder: 'ascending'
         }
     }
 
@@ -71,12 +72,21 @@ class Game extends React.Component {
         })
     }
 
+    reverseSortOrder() {
+        if (this.state.sortOrder === 'ascending') {
+            this.setState({ sortOrder: 'descending' })
+            return
+        }
+        this.setState({ sortOrder: 'ascending' })
+        return
+    }
+
     render() {
         const history = this.state.history
         const current = history[history.length - 1]
         const positions = current.placeOrder
         const winner = calculateWinner(current.squares)
-        const moves = history.map((step, move) => {
+        let moves = history.map((step, move) => {
             let desc = 'Go to start'
             if (move) {
                 let player = (move % 2) === 0 ? 'O' : 'X'
@@ -84,14 +94,21 @@ class Game extends React.Component {
             }
             return (
                 <li key={move}>
-                    <button
-                        onClick={() => this.jumpTo(move)}
-                        style={{ fontWeight: positions[move] === this.state.boldMove ? 'bold' : 'normal' }}>
-                        {desc}
-                    </button>
+                    <div className='move-info'>
+                        <p>{move}</p>
+                        <button
+                            className='move-to-button'
+                            onClick={() => this.jumpTo(move)}
+                            style={{ fontWeight: positions[move] === this.state.boldMove ? 'bold' : 'normal' }}>
+                            {desc}
+                        </button>
+                    </div>
                 </li>
             )
         })
+        if (this.state.sortOrder === 'descending') {
+            moves = moves.slice().reverse()
+        }
         let status
         if (winner) {
             status = 'Winner is ' + winner
@@ -109,7 +126,10 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <button onClick={() => this.reverseSortOrder()}>
+                        Sort {this.state.sortOrder === 'ascending' ? 'descending' : 'ascending'}
+                    </button>
+                    <ul>{moves}</ul>
                 </div>
             </div>
         )
